@@ -1,9 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
+import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+
+import Stack from './src/navigator/Stack';
+
+import './gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,18 +29,10 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={{fontSize: 20, fontFamily: 'Lato-Bold'}}>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack />
+      <StatusBar style='auto' />
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
