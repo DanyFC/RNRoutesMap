@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Stack from './src/navigator/Stack';
 
@@ -29,10 +30,12 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack />
-      <StatusBar style='auto' />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack />
+        <StatusBar style='auto' />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 
