@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { PermissionsProvider } from './src/context/Permissions';
 import Stack from './src/navigator/Stack';
 
 import './gesture-handler';
@@ -31,10 +32,12 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack />
-        <StatusBar style='auto' />
-      </NavigationContainer>
+      <PermissionsProvider>
+        <NavigationContainer>
+          <Stack />
+          <StatusBar style='auto' />
+        </NavigationContainer>
+      </PermissionsProvider>
     </SafeAreaProvider>
   );
 }
