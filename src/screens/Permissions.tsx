@@ -1,20 +1,24 @@
 import { useContext } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { PermissionsContext } from '../context/Permissions';
+import Button from './../components/Button';
 
 const Permissions = () => {
 
-  const { permissions, askLocationPermission, checkLocationPermission } = useContext(PermissionsContext)
+  const { askLocationPermission } = useContext(PermissionsContext)
 
   return (
     <View style={styles.container}>
 
       <Text
-        style={{ fontSize: 30, fontFamily: 'Lato-Regular' }}
-      >Permissions screen - {JSON.stringify(permissions, null, 4)}</Text>
+        style={styles.text}
+      >The use of GPS is necessary for the application.</Text>
 
-      <Button title='Ask permission' onPress={askLocationPermission} />
+      <Button
+        onPress={askLocationPermission}
+        title='Ask permissions'
+      />
 
     </View>
   )
@@ -23,8 +27,21 @@ export default Permissions
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
+  text: {
+    fontFamily: 'Lato-Light',
+    fontSize: 20,
+    marginBottom: 20,
+    paddingHorizontal: '10%',
+    textAlign: 'center',
+  },
+  textDanger: {
+    bottom: 10,
+    color: '#cc1717',
+    fontFamily: 'Lato-Bold',
+    position: 'absolute',
+  }
 })
