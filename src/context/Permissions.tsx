@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { AppState, Platform } from 'react-native';
 
-import { check, PERMISSIONS, PermissionStatus, request } from 'react-native-permissions';
+import { check, openSettings, PERMISSIONS, PermissionStatus, request } from 'react-native-permissions';
 
 interface PermissionsState {
   locationStatus: PermissionStatus;
@@ -28,7 +28,9 @@ export const PermissionsProvider = ({ children }: { children: JSX.Element | JSX.
     if (Platform.OS === 'android') {
       try {
         const status = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-        
+
+        if (status === 'blocked') openSettings()
+
         setPermissions({ ...permissions, locationStatus: status })
       } catch (error) {
         console.log("🚀 ~ askLocationPermission ~ error:", error)
