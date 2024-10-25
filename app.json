@@ -23,13 +23,19 @@
         "android.permission.ACCESS_BACKGROUND_LOCATION",
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "package": "com.danyfc.RNRoutesMap"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c9ec2d44-e9c2-4216-9c91-dee38c043cc0"
+      }
+    }
   }
 }
