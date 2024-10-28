@@ -24,6 +24,11 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
       ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA86NJt6xXBmEWy8mU1i25TBrHaa50536I"
+        }
+      },
       "package": "com.danyfc.RNRoutesMap"
     },
     "web": {
