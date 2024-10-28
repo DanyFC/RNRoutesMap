@@ -2,13 +2,13 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface Props {
+  active?: boolean;
   iconName: string;
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
-
 }
 
-const Fab = ({ iconName, onPress, style = {} }: Props) => {
+const Fab = ({ active = false, iconName, onPress, style = {} }: Props) => {
   return (
     <View style={{ ...style as any }}>
 
@@ -20,20 +20,20 @@ const Fab = ({ iconName, onPress, style = {} }: Props) => {
         <Entypo name={iconName as any} color='#fff' size={25} />
       </TouchableOpacity>
 
-    </View>
+    </View >
   )
 }
 export default Fab
 
 const styles = StyleSheet.create({
   fabButton: {
-    backgroundColor: '#333',
+    alignItems: 'center',
+    backgroundColor: '#c22929',
+    borderRadius: 100,
+    elevation: 6,
     height: 50,
+    justifyContent: 'center',
     width: 50,
     zIndex: 999,
-    borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 6,
   }
 })

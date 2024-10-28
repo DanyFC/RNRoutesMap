@@ -2,24 +2,54 @@ import { StyleSheet, View } from 'react-native';
 
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Fab from '../components/Fab';
 import useLocation from '../hooks/useLocation';
 import Loading from './Loading';
 
 const Map = () => {
 
-  const { getCurrentLocation, hasLocation, initLocation } = useLocation()
+  const {
+    hasLocation,
+    initLocation,
+    location,
+
+    getCurrentLocation,
+    followUserLocation,
+    stopFollowUserLocation } = useLocation()
+
   const mapViewRef = useRef<MapView>()
+  const following = useRef(true)
 
   const centerCurrentPosition = async () => {
     const { latitude, longitude } = await getCurrentLocation()
+
+    following.current = true
 
     mapViewRef.current?.animateCamera({
       center: { latitude, longitude },
       zoom: 18,
     })
   }
+
+  useEffect(() => {
+    followUserLocation()
+
+    return () => {
+      stopFollowUserLocation()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!following.current) return
+
+    const { latitude, longitude } = location
+
+    mapViewRef.current?.animateCamera({
+      center: { latitude, longitude },
+      zoom: 18,
+    })
+  }, [location])
 
   if (!hasLocation) return <Loading />
 
@@ -41,6 +71,8 @@ const Map = () => {
 
         showsUserLocation
         showsMyLocationButton={false}
+
+        onTouchStart={() => following.current = false}
       />
 
       <Fab
