@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { View } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,7 +17,15 @@ const Stack = () => {
   const { permissions } = useContext(PermissionsContext)
 
   if (permissions.locationStatus === 'unavailable') {
-    return <Loading />
+    return (
+      <View style={{
+        flex: 1,
+        marginTop: top,
+        backgroundColor: '#fff'
+      }}>
+        <Loading />
+      </View>
+    )
   }
 
   return (
