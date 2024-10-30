@@ -27,6 +27,10 @@ const MarkerModal = ({ isVisible, hideModal, onModalSubmit }: Props) => {
     if (markerInfo.description === '' || markerInfo.title === '') return
 
     onModalSubmit(markerInfo)
+    setMarkerInfo({
+      description: '',
+      title: '',
+    })
     hideModal()
   }
 
