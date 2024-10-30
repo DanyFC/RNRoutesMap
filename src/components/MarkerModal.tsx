@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, Modal as RModal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 
 interface MarkerInfo {
@@ -7,34 +7,28 @@ interface MarkerInfo {
 }
 
 interface Props {
-  visible: boolean;
+  isVisible: boolean;
+  hideModal: () => void;
   onModalSubmit: ({ description, title }: MarkerInfo) => void;
 }
 
-const MarkerModal = ({ visible, onModalSubmit }: Props) => {
-  
-  const [isVisible, setIsVisible] = useState(visible)
+const MarkerModal = ({ isVisible, hideModal, onModalSubmit }: Props) => {
+
   const [markerInfo, setMarkerInfo] = useState<MarkerInfo>({
     description: '',
     title: '',
   })
 
-  const hideModal = () => setIsVisible(false)
-
   const onChange = (value: string, field: keyof MarkerInfo) => {
     setMarkerInfo({ ...markerInfo, [field]: value })
   }
 
-  const onSubmitModal = () => {
-    if (markerInfo.description.length === 0 || markerInfo.title.length === 0) return
+  const onSubmit = () => {
+    if (markerInfo.description === '' || markerInfo.title === '') return
 
     onModalSubmit(markerInfo)
     hideModal()
   }
-
-  useEffect(() => {
-    setIsVisible(visible)
-  }, [visible])
 
   return (
     <View style={styles.container}>
@@ -71,7 +65,7 @@ const MarkerModal = ({ visible, onModalSubmit }: Props) => {
                 />
               </View>
 
-              <Button title='Create' onPress={onSubmitModal} />
+              <Button title='Create' onPress={onSubmit} />
 
             </View>
           </TouchableWithoutFeedback>
