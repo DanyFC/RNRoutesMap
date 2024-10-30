@@ -1,10 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Fab from '../components/Fab';
-import useLocation from '../hooks/useLocation';
+import MarkerModal from '../components/MarkerModal';
+import useLocation, { Location } from '../hooks/useLocation';
 import Loading from './Loading';
 
 const Map = () => {
@@ -13,13 +14,21 @@ const Map = () => {
     hasLocation,
     initLocation,
     location,
+    markers,
 
+    createMarker,
     getCurrentLocation,
     followUserLocation,
     stopFollowUserLocation } = useLocation()
 
   const mapViewRef = useRef<MapView>()
   const following = useRef(true)
+
+  const [isVisibleModal, setIsVisibleModal] = useState(false)
+  const [marker, setMarker] = useState<Location>({
+    latitude: 0,
+    longitude: 0,
+  })
 
   const centerCurrentPosition = async () => {
     const { latitude, longitude } = await getCurrentLocation()
@@ -30,6 +39,11 @@ const Map = () => {
       center: { latitude, longitude },
       zoom: 18,
     })
+  }
+
+  const showCreateMarkerModal = ({ latitude, longitude }: Location) => {
+    setIsVisibleModal(true)
+    setMarker({ latitude, longitude })
   }
 
   useEffect(() => {
@@ -55,6 +69,16 @@ const Map = () => {
 
   return (
     <View style={styles.container}>
+      <MarkerModal
+        visible={isVisibleModal}
+        onModalSubmit={({description, title}) => createMarker({
+          coordinate: marker,
+          description,
+          id: (markers.length + 1).toString(),
+          title,
+        })}
+      />
+
       <MapView
         ref={(element) => mapViewRef.current = element!}
 
@@ -73,7 +97,18 @@ const Map = () => {
         showsMyLocationButton={false}
 
         onTouchStart={() => following.current = false}
-      />
+
+        onLongPress={({ nativeEvent: { coordinate } }) => showCreateMarkerModal(coordinate)}
+      >
+        {markers.map(({ coordinate, description, id, title }) => (
+          <Marker
+            key={id}
+            coordinate={coordinate}
+            title={title}
+            description={description}
+          ></Marker>
+        ))}
+      </MapView>
 
       <Fab
         iconName='location'
