@@ -22,7 +22,6 @@ const Map = () => {
   })
 
   const showCreateMarkerModal = ({ latitude, longitude }: Location) => {
-    console.log('show modal')
     setIsVisible(true)
     setMarker({ latitude, longitude })
   }

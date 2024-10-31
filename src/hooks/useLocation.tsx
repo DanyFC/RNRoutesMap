@@ -49,7 +49,7 @@ const useLocation = () => {
           longitude: coords.longitude,
         })
       },
-      (error) => console.log(error),
+      (error) => console.log("🚀 ~ followUserLocation ~ error:", error),
       {
         enableHighAccuracy: true,
         distanceFilter: 10
